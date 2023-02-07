@@ -1,5 +1,6 @@
 import http from 'node:http';
 import {EventEmitter} from 'node:events';
+import {createHash} from 'node:crypto';
 
 export class WebSocketServer extends EventEmitter {
     constructor(options = {}) {
@@ -10,8 +11,7 @@ export class WebSocketServer extends EventEmitter {
     }
 
     _generateAcceptValue(acceptKey) {
-        return crypto
-            .createHash('sha1')
+        return createHash('sha1')
             .update(acceptKey + this.GUID, 'binary')
             .digest('base64');
     }
